@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gentileza do Dia</title>
+  <meta name="description" content="Clique e receba uma frase aleatória de gentileza. Compartilhe com o time!" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#20285C;
+      --brand-2:#0F9AFE;
+      --bg:#f6f8fb;
+      --text:#1d2433;
+      --muted:#70788a;
+      --card:#ffffff;
+      --shadow:0 10px 30px rgba(32,40,92,.15);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:radial-gradient(1200px 700px at 10% -10%, rgba(32,40,92,.07), transparent 60%),
+                               radial-gradient(900px 600px at 110% 10%, rgba(15,154,254,.06), transparent 60%), var(--bg);
+      color:var(--text); font-family:Montserrat, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .wrap{ max-width:920px; width:100%; }
+    header{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+    header img{ height:42px; width:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+    header .brand{ font-weight:800; letter-spacing:.3px; color:var(--brand); }
+    .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px; position:relative; overflow:hidden; }
+    .badge{ position:absolute; top:16px; right:16px; font-size:12px; color:#fff; background:linear-gradient(135deg, var(--brand), var(--brand-2)); padding:6px 10px; border-radius:999px; letter-spacing:.3px; }
+    .quote{ font-size:clamp(22px,4vw,34px); line-height:1.3; font-weight:800; color:var(--brand); margin:6px 0 10px; }
+    .author{ color:var(--muted); font-weight:600; font-size:14px; margin-bottom:8px; }
+    .hint{ color:var(--muted); font-size:12px; }
+    .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+    .controls input[type="text"]{ flex:1 1 220px; padding:12px 14px; border-radius:12px; border:1px solid #e8eaf1; outline:none; font:inherit; }
+    .btn{ appearance:none; border:0; background:var(--brand); color:#fff; padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(32,40,92,.25); transition:transform .06s ease; }
+    .btn.secondary{ background:#eef2ff; color:var(--brand); box-shadow:none; border:1px solid rgba(32,40,92,.15); }
+    .btn.ghost{ background:transparent; color:var(--brand); box-shadow:none; border:1px dashed rgba(32,40,92,.35); }
+    .btn:active{ transform:translateY(1px) }
+    footer{ margin-top:16px; text-align:center; color:var(--muted); font-size:12px; }
+    @media (max-width:480px){ header{flex-direction:column; align-items:flex-start} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="Logo ContabExpress_Horizontal Azul.png" alt="ContabExpress Logo" id="logo"/>
+      <div>
+        <div class="brand">Dia Mundial da Gentileza</div>
+        <div class="small">Clique em “Quero outra” para sortear uma nova frase · Compartilhe com o time ✨</div>
+      </div>
+    </header>
+    <section class="card">
+      <div class="badge">Gentileza gera gentileza</div>
+      <div id="quote" class="quote">…</div>
+      <div id="author" class="author"></div>
+      <div class="hint" id="hint"></div>
+      <div class="controls">
+        <input type="text" id="name" placeholder="Digite seu nome (opcional)" />
+        <button class="btn" id="btn-next">Quero outra</button>
+        <button class="btn secondary" id="btn-copy">Copiar como imagem</button>
+        <button class="btn ghost" id="btn-link">Gerar link com meu nome</button>
+        <a class="btn secondary" id="btn-whats" href="#" target="_blank" rel="noopener">Compartilhar no WhatsApp</a>
+      </div>
+    </section>
+    <footer>
+      <div>Versão personalizada ContabExpress — #20285C 💙</div>
+    </footer>
+  </div>
+  <script>
+    const LOGO_URL = "Logo ContabExpress_Horizontal Azul.png";
+    const FRASES = [
+      { text: "{NOME}, gentileza é grátis — e rende dividendos humanos.", author: "" },
+      { text: "Um gesto gentil hoje pode ser o motivo do sorriso de alguém amanhã.", author: "" },
+      { text: "Palavras gentis curam. Silêncios gentis acolhem. Atitudes gentis transformam.", author: "" },
+      { text: "Quando não souber o que fazer, escolha ser gentil.", author: "" },
+      { text: "Ser gentil não custa — mas vale muito.", author: "" },
+      { text: "Nada é tão contagioso quanto um ato de gentileza.", author: "" },
+      { text: "{NOME}, você pode ser a gentileza que faltava no dia de alguém.", author: "" }
+    ];
+    const $ = (sel) => document.querySelector(sel);
+    const quoteEl = $('#quote');
+    const authorEl = $('#author');
+    const hintEl = $('#hint');
+    const nameInput = $('#name');
+    const btnNext = $('#btn-next');
+    const btnWhats = $('#btn-whats');
+    if (LOGO_URL) { document.getElementById('logo').src = LOGO_URL; }
+    function randomItem(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+    function personalize(text, name){ return name ? text.replaceAll('{NOME}', name) : text; }
+    function drawQuote(){
+      const raw = randomItem(FRASES);
+      const name = (nameInput.value || '').trim();
+      const text = personalize(raw.text, name);
+      quoteEl.textContent = text;
+      authorEl.textContent = raw.author ? '— ' + raw.author : '';
+      hintEl.textContent = name ? `Para você, ${name} ✨` : '';
+      const wmsg = encodeURIComponent(`${text} ${raw.author?('\n'+authorEl.textContent):''}\n#DiaDaGentileza`);
+      btnWhats.href = `https://wa.me/?text=${wmsg}`;
+    }
+    btnNext.addEventListener('click', drawQuote);
+    nameInput.addEventListener('input', drawQuote);
+    drawQuote();
+  </script>
+</body>
+</html>

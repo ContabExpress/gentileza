@@ -29,32 +29,98 @@
     header{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
     header img{ height:42px; width:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
     header .brand{ font-weight:800; letter-spacing:.3px; color:var(--brand); }
-    .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px; position:relative; overflow:hidden; }
-    .badge {
-  display: inline-block;
-  position: static;         /* retira o posicionamento fixo do canto */
-  font-size: 12px;
-  color: #fff;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  padding: 6px 12px;
-  border-radius: 999px;
-  letter-spacing: .3px;
-}
-    .quote{ font-size:clamp(22px,4vw,34px); line-height:1.3; font-weight:800; color:var(--brand); margin:6px 0 10px; }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:28px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* CENTRALIZAÇÃO DO SELO */
+    .badge-wrap{
+      text-align:center;
+      margin: 4px 0 20px;
+    }
+
+    .badge{
+      display:inline-block;
+      position:static;
+      font-size:12px;
+      color:#fff;
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+      padding:6px 12px;
+      border-radius:999px;
+      letter-spacing:.3px;
+    }
+
+    .quote{
+      font-size:clamp(22px,4vw,34px);
+      line-height:1.3;
+      font-weight:800;
+      color:var(--brand);
+      margin:6px 0 10px;
+    }
     .author{ color:var(--muted); font-weight:600; font-size:14px; margin-bottom:8px; }
     .hint{ color:var(--muted); font-size:12px; }
-    .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
-    .controls input[type="text"]{ flex:1 1 220px; padding:12px 14px; border-radius:12px; border:1px solid #e8eaf1; outline:none; font:inherit; }
-    .btn{ appearance:none; border:0; background:var(--brand); color:#fff; padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(32,40,92,.25); transition:transform .06s ease; }
-    .btn.secondary{ background:#eef2ff; color:var(--brand); box-shadow:none; border:1px solid rgba(32,40,92,.15); }
-    .btn.ghost{ background:transparent; color:var(--brand); box-shadow:none; border:1px dashed rgba(32,40,92,.35); }
+
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+      align-items:center;
+    }
+
+    .controls input[type="text"]{
+      flex:1 1 220px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid #e8eaf1;
+      outline:none;
+      font:inherit;
+    }
+
+    .btn{
+      appearance:none;
+      border:0;
+      background:var(--brand);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(32,40,92,.25);
+      transition:transform .06s ease;
+    }
+
+    .btn.secondary{
+      background:#eef2ff;
+      color:var(--brand);
+      box-shadow:none;
+      border:1px solid rgba(32,40,92,.15);
+    }
+
     .btn:active{ transform:translateY(1px) }
-    footer{ margin-top:16px; text-align:center; color:var(--muted); font-size:12px; }
-    @media (max-width:480px){ header{flex-direction:column; align-items:flex-start} }
+
+    footer{
+      margin-top:16px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    @media (max-width:480px){
+      header{flex-direction:column; align-items:flex-start}
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
+
     <header>
       <img src="Logo ContabExpress_Horizontal Azul.png" alt="ContabExpress Logo" id="logo"/>
       <div>
@@ -62,40 +128,50 @@
         <div class="small">Clique em “Quero outra” para sortear uma nova frase · Compartilhe com o time ✨</div>
       </div>
     </header>
-    <section class="card">
-      <div class="badge-wrap">
-    <div class="badge">Gentileza gera gentileza</div>
-  </div>
 
-  <div id="quote" class="quote">…</div>
-  <div id="author" class="author"></div>
-  <div class="hint" id="hint"></div>
+    <section class="card">
+
+      <div class="badge-wrap">
+        <div class="badge">Gentileza gera gentileza</div>
+      </div>
+
+      <div id="quote" class="quote">…</div>
+      <div id="author" class="author"></div>
+      <div class="hint" id="hint"></div>
+
       <div class="controls">
+        <input type="text" id="name" placeholder="Digite seu nome (opcional)" />
         <button class="btn" id="btn-next">Quero outra</button>
         <button class="btn secondary" id="btn-copy">Copiar como imagem</button>
         <a class="btn secondary" id="btn-whats" href="#" target="_blank" rel="noopener">Compartilhar no WhatsApp</a>
       </div>
+
     </section>
+
     <footer>
       <div>Versão personalizada ContabExpress — #20285C 💙</div>
     </footer>
+
   </div>
+
   <script>
     const LOGO_URL = "Logo ContabExpress_Horizontal Azul.png";
+
     const FRASES = [
-  { text: "Hoje é um bom dia pra lembrar o quanto seu trabalho faz diferença.", author: "" },
-  { text: "A forma como você cuida do que faz inspira quem está ao seu redor.", author: "" },
-  { text: "Que sua gentileza hoje alcance alguém que nem esperava um gesto bom.", author: "" },
-  { text: "Gentileza também é se permitir respirar, cuidar de você e seguir mais leve.", author: "" },
-  { text: "Que o seu dia seja tão gentil quanto o cuidado que você entrega todos os dias.", author: "" },
-  { text: "Lembre-se: a gentileza que você oferece é reflexo da grandeza que já tem.", author: "" },
-  { text: "Que o seu dia comece com calma e termine com orgulho do que você fez.", author: "" },
-  { text: "Você não precisa ser perfeito; só gentil com o processo.", author: "" },
-  { text: "Que você encontre motivos pra sorrir entre as entregas e reuniões.", author: "" },
-  { text: "Que a sua gentileza inspire o time a fazer o mesmo.", author: "" },
-  { text: "Sua paciência nos dias corridos é um ato de gentileza que todos sentimos.", author: "" },
-  { text: "Gentileza também é dividir o conhecimento e celebrar o sucesso do outro.", author: "" }
-];
+      { text: "Hoje é um bom dia pra lembrar o quanto seu trabalho faz diferença.", author: "" },
+      { text: "A forma como você cuida do que faz inspira quem está ao seu redor.", author: "" },
+      { text: "Que sua gentileza hoje alcance alguém que nem esperava um gesto bom.", author: "" },
+      { text: "Gentileza também é se permitir respirar, cuidar de você e seguir mais leve.", author: "" },
+      { text: "Que o seu dia seja tão gentil quanto o cuidado que você entrega todos os dias.", author: "" },
+      { text: "Lembre-se: a gentileza que você oferece é reflexo da grandeza que já tem.", author: "" },
+      { text: "Que o seu dia comece com calma e termine com orgulho do que você fez.", author: "" },
+      { text: "Você não precisa ser perfeito; só gentil com o processo.", author: "" },
+      { text: "Que você encontre motivos pra sorrir entre as entregas e reuniões.", author: "" },
+      { text: "Que a sua gentileza inspire o time a fazer o mesmo.", author: "" },
+      { text: "Sua paciência nos dias corridos é um ato de gentileza que todos sentimos.", author: "" },
+      { text: "Gentileza também é dividir o conhecimento e celebrar o sucesso do outro.", author: "" }
+    ];
+
     const $ = (sel) => document.querySelector(sel);
     const quoteEl = $('#quote');
     const authorEl = $('#author');
@@ -103,9 +179,16 @@
     const nameInput = $('#name');
     const btnNext = $('#btn-next');
     const btnWhats = $('#btn-whats');
-    if (LOGO_URL) { document.getElementById('logo').src = LOGO_URL; }
+    const btnCopy = $('#btn-copy');
+
+    if (LOGO_URL) document.getElementById('logo').src = LOGO_URL;
+
     function randomItem(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-    function personalize(text, name){ return name ? text.replaceAll('{NOME}', name) : text; }
+
+    function personalize(text, name){
+      return name ? text.replaceAll('{NOME}', name) : text;
+    }
+
     function drawQuote(){
       const raw = randomItem(FRASES);
       const name = (nameInput.value || '').trim();
@@ -113,12 +196,16 @@
       quoteEl.textContent = text;
       authorEl.textContent = raw.author ? '— ' + raw.author : '';
       hintEl.textContent = name ? `Para você, ${name} ✨` : '';
-      const wmsg = encodeURIComponent(`${text} ${raw.author?('\n'+authorEl.textContent):''}\n#DiaDaGentileza`);
+
+      const wmsg = encodeURIComponent(`${text}\n#DiaDaGentileza`);
       btnWhats.href = `https://wa.me/?text=${wmsg}`;
     }
+
     btnNext.addEventListener('click', drawQuote);
     nameInput.addEventListener('input', drawQuote);
+
     drawQuote();
   </script>
+
 </body>
 </html>

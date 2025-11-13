@@ -74,15 +74,6 @@
       align-items:center;
     }
 
-    .controls input[type="text"]{
-      flex:1 1 220px;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid #e8eaf1;
-      outline:none;
-      font:inherit;
-    }
-
     .btn{
       appearance:none;
       border:0;
@@ -154,7 +145,8 @@
   </div>
 
   <script>
-    const LOGO_URL = "Logo ContabExpress_Horizontal Azul.png";
+    // usa o mesmo arquivo de logo que está no <img>
+    const LOGO_URL = "Logo Dicon.png";
 
     const FRASES = [
       { text: "Hoje é um bom dia pra lembrar o quanto seu trabalho faz diferença.", author: "" },
@@ -175,36 +167,32 @@
     const quoteEl = $('#quote');
     const authorEl = $('#author');
     const hintEl = $('#hint');
-    const nameInput = $('#name');
     const btnNext = $('#btn-next');
     const btnWhats = $('#btn-whats');
-    const btnCopy = $('#btn-copy');
+    const btnCopy = $('#btn-copy'); // hoje não faz nada, mas não quebra
 
     if (LOGO_URL) document.getElementById('logo').src = LOGO_URL;
 
     function randomItem(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
-    function personalize(text, name){
-      return name ? text.replaceAll('{NOME}', name) : text;
-    }
-
     function drawQuote(){
       const raw = randomItem(FRASES);
-      const name = (nameInput.value || '').trim();
-      const text = personalize(raw.text, name);
-      quoteEl.textContent = text;
+      quoteEl.textContent = raw.text;
       authorEl.textContent = raw.author ? '— ' + raw.author : '';
-      hintEl.textContent = name ? `Para você, ${name} ✨` : '';
+      hintEl.textContent = ''; // sem personalização por nome
 
-      const wmsg = encodeURIComponent(`${text}\n#DiaDaGentileza`);
+      const wmsg = encodeURIComponent(`${raw.text}\n#DiaDaGentileza`);
       btnWhats.href = `https://wa.me/?text=${wmsg}`;
     }
 
     btnNext.addEventListener('click', drawQuote);
-    nameInput.addEventListener('input', drawQuote);
 
+    // carregar primeira frase
     drawQuote();
   </script>
+
+</body>
+</html>
 
 </body>
 </html>

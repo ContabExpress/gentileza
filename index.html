@@ -27,7 +27,6 @@
     }
     .wrap{ max-width:920px; width:100%; }
     header{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
-    header img{ height:42px; width:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
     header .brand{ font-weight:800; letter-spacing:.3px; color:var(--brand); }
 
     .card{
@@ -113,7 +112,6 @@
   <div class="wrap">
 
     <header>
-      
       <div>
         <div class="brand">Dia Mundial da Gentileza</div>
         <div class="small">Clique em “Quero outra” para sortear uma nova frase · Compartilhe com o time ✨</div>
@@ -145,8 +143,6 @@
   </div>
 
   <script>
-    // usa o mesmo arquivo de logo que está no <img>
-
     const FRASES = [
       { text: "Hoje é um bom dia pra lembrar o quanto seu trabalho faz diferença.", author: "" },
       { text: "A forma como você cuida do que faz inspira quem está ao seu redor.", author: "" },
@@ -170,8 +166,6 @@
     const btnWhats = $('#btn-whats');
     const btnCopy = $('#btn-copy'); // hoje não faz nada, mas não quebra
 
-    if (LOGO_URL) document.getElementById('logo').src = LOGO_URL;
-
     function randomItem(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
     function drawQuote(){
@@ -189,9 +183,6 @@
     // carregar primeira frase
     drawQuote();
   </script>
-
-</body>
-</html>
 
 </body>
 </html>
